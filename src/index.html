@@ -8,7 +8,11 @@
     <title>Webpack</title>
 </head>
 <body>
-<h1>Webpack</h1>
+
+<div id="app">
+    <button @click.prevent="show = !show">Toggle</button>
+    <example-component v-if="show"></example-component>
+</div>
 
 </body>
 </html>

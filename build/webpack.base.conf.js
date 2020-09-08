@@ -3,6 +3,7 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
 
 const PATH = {
     src: path.join(__dirname, '..', 'src'),
@@ -22,12 +23,26 @@ module.exports = {
         path: PATH.dist,
         publicPath: "/"
     },
+    resolve: {
+        alias: {
+            "vue$": "vue/dist/vue.js"
+        }
+    },
     module: {
         rules: [
             {
                 test: /\.js$/,
                 exclude: '/node_modules/',
                 loader: ['babel-loader']
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loader: {
+                        scss: ['vue-style-loader!css-loader!sass-loader']
+                    }
+                }
             },
             {
                 test: /\.css$/,
@@ -84,6 +99,7 @@ module.exports = {
             hash: false,
             template: `${PATH.src}/index.html`,
             filename: "./index.html"
-        })
+        }),
+        new VueLoaderPlugin()
     ]
 };
