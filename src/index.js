@@ -1,3 +1,4 @@
-const add = (a,b) => a+b;
+import './css/main.css';
+import './scss/main.scss';
 
-console.log(add(2,5));
+window.Vue = require('vue');
