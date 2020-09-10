@@ -19,13 +19,25 @@ module.exports = {
         app: PATH.src
     },
     output: {
-        filename: `${PATH.assets}js/[name].js`,
+        filename: `${PATH.assets}js/[name].[hash].js`,
         path: PATH.dist,
         publicPath: "/"
     },
     resolve: {
         alias: {
             "vue$": "vue/dist/vue.js"
+        }
+    },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    name: 'vendors',
+                    test: /node_modules/,
+                    chunks: "all",
+                    enforce: true
+                }
+            }
         }
     },
     module: {
@@ -86,7 +98,7 @@ module.exports = {
     },
     plugins: [
         new MiniCSSExtractPlugin({
-            filename: `${PATH.assets}css/[name].css`,
+            filename: `${PATH.assets}css/[name].[hash].css`,
         }),
         new CopyWebpackPlugin({
             patterns: [
